@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Laravel10-CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -22,20 +22,42 @@
         </div>
 
         <div class="row">
-            <form>
+            
+            @if ($errors->any())
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>
+                            <div class="alert alert-danger">
+                                {{ $error }}
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <form action="/ajouter/traitement" method="POST">
+                @csrf
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nom</label>
-                    <input type="text" name="name" id="name" class="form-control">
+                    <label for="nom" class="form-label">Nom</label>
+                    {{-- Possiblité d'utiliser directement "required dans le input" --}}
+                    {{-- <input type="text" name="nom" id="nom" class="form-control" required> --}}
+                    <input type="text" name="nom" id="nom" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="first_name" class="form-label">Prénoms</label>
-                    <input type="text" name="first_name" id="first_name" class="form-control">
+                    <label for="prenom" class="form-label">Prénoms</label>
+                    <input type="text" name="prenom" id="prenom" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="classe" class="form-label">Classe</label>
                     <input type="text" name="classe" id="classe" class="form-control">
                 </div>
-                <a class="btn btn-primary" href="#" role="button">Enregistrer</a>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
             </form>
         </div>
     </div>
